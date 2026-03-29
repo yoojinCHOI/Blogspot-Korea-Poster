@@ -12,7 +12,7 @@ class TopicPlanner:
             raise ValueError("GEMINI_API_KEY가 없습니다. .env 파일을 확인해주세요.")
         
         self.client = genai.Client(api_key=Config.GEMINI_API_KEY)
-        self.model_name = 'gemini-2.0-flash-lite'
+        self.model_name = 'gemini-2.5-flash-lite'
 
     def generate_topics(self, count=10) -> list:
         prompt = f"""
