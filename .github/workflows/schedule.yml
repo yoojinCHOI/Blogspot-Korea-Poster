@@ -2,8 +2,8 @@ name: Daily Blogspot Auto Poster
 
 on:
   schedule:
-    # Runs at 00:00 UTC (9:00 AM KST) every day
-    - cron: '0 0 * * *'
+    # Runs at 12:00 UTC (9:00 PM KST) every day
+    - cron: '0 12 * * *'
   workflow_dispatch: # Allows manual trigger from GitHub UI
 
 jobs:
