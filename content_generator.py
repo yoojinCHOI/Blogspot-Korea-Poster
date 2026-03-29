@@ -11,7 +11,7 @@ class ContentGenerator:
         if not Config.GEMINI_API_KEY:
             raise ValueError("GEMINI_API_KEY가 없습니다.")
         self.client = genai.Client(api_key=Config.GEMINI_API_KEY)
-        self.model_name = 'gemini-2.5-flash'
+        self.model_name = 'gemini-1.5-flash'
 
     def generate_article(self, topic: str) -> dict:
         prompt = f"""
