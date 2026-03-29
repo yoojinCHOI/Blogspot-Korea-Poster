@@ -14,7 +14,7 @@ class TopicPlanner:
         self.client = genai.Client(api_key=Config.GEMINI_API_KEY)
         self.model_name = 'gemini-2.5-flash-lite'
 
-    def generate_topics(self, count=10) -> list:
+    def generate_topics(self, count=5) -> list:
         prompt = f"""
 당신은 한국인들을 주 타겟으로 하는 웹사이트의 경제, 주식, 보험 전문 수석 콘텐츠 기획자입니다.
 오늘 방문자들의 클릭을 유도할 수 있는 매우 흥미롭고 유익한 블로그 포스팅 주제 (제목) {count}개를 선정해주세요.

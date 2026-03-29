@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 def main():
-    logger.info("Starting Daily Blogspot Auto-Poster Pipeline (10 Posts/Day, Korean)...")
+    logger.info("Starting Daily Blogspot Auto-Poster Pipeline (5 Posts/Day, Korean)...")
     
     try:
         planner = TopicPlanner()
@@ -23,8 +23,8 @@ def main():
         logger.error(f"Failed to initialize modules. Please check credentials. Error: {e}")
         return
 
-    # 1. 하루 10개 주제 생성 지시 (변경점)
-    topics = planner.generate_topics(count=10)
+    # 1. 하루 5개 주제 생성 지시 (변경점)
+    topics = planner.generate_topics(count=5)
     if not topics:
         logger.error("Failed to generate topics. Exiting.")
         return
