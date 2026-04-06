@@ -49,11 +49,23 @@ class ContentGenerator:
 * hashtags 속성은 블로그 노출 유입을 위해, 본문 내용과 연관된 '한국어 키워드'를 띄어쓰기 없이 5~10개 사이로 추출하세요.
 """
         logger.info(f"주제에 대한 본문 작성 중: {topic}")
-        response = self.client.models.generate_content(
-            model=self.model_name, 
-            contents=prompt,
-            config={'response_mime_type': 'application/json'}
-        )
+        import time
+        response = None
+        for attempt in range(1, 4):
+            try:
+                response = self.client.models.generate_content(
+                    model=self.model_name, 
+                    contents=prompt,
+                    config={'response_mime_type': 'application/json'}
+                )
+                break
+            except Exception as e:
+                logger.warning(f"제미나이 API 호출 실패 (시도 {attempt}/3): {e}")
+                if attempt == 3:
+                    logger.error("API 호출 최종 실패. 진행을 건너뜁니다.")
+                    return None
+                time.sleep(15 * attempt)
+                
         text_output = response.text.strip()
         
         try:

@@ -34,11 +34,23 @@ class TopicPlanner:
 ]
 """
         logger.info(f"제미나이 AI에게 {count}개의 경제 주제 기획을 요청합니다...")
-        response = self.client.models.generate_content(
-            model=self.model_name, 
-            contents=prompt,
-            config={'response_mime_type': 'application/json'}
-        )
+        import time
+        response = None
+        for attempt in range(1, 4):
+            try:
+                response = self.client.models.generate_content(
+                    model=self.model_name, 
+                    contents=prompt,
+                    config={'response_mime_type': 'application/json'}
+                )
+                break
+            except Exception as e:
+                logger.warning(f"제미나이 API 호출 실패 (시도 {attempt}/3): {e}")
+                if attempt == 3:
+                    logger.error("API 호출 최종 실패. 빈 리스트를 반환합니다.")
+                    return []
+                time.sleep(15 * attempt)
+                
         text_output = response.text.strip()
         
         try:
