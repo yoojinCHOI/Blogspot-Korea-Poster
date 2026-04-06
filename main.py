@@ -21,7 +21,8 @@ def main():
         publisher = BloggerPublisher()
     except Exception as e:
         logger.error(f"Failed to initialize modules. Please check credentials. Error: {e}")
-        return
+        import sys
+        sys.exit(1)
 
     # 1. 하루 5개 주제 생성 지시 (변경점)
     topics = planner.generate_topics(count=5)
