@@ -16,10 +16,10 @@ class ImageProcurement:
 
     def get_image_url(self, keyword: str) -> str:
         if not self.access_key or self.access_key.strip().lower() in ["your_unsplash_api_key_here", "none", "null", ""]:
-            # Fallback to a much more stable server (LoremFlickr) with simplified single-word keyword to prevent 404s
-            safe_kw = keyword.split()[0].replace(',', '').replace('.', '') if keyword else "finance"
+            # Fallback to Pollinations AI, which is free and very reliable
+            safe_kw = urllib.parse.quote(keyword if keyword else "finance")
             rand_seed = random.randint(1, 999999)
-            return f"https://loremflickr.com/800/400/{safe_kw}?lock={rand_seed}"
+            return f"https://image.pollinations.ai/prompt/{safe_kw}?width=800&height=400&nologo=true&seed={rand_seed}"
             
         params = {
             "query": keyword,
@@ -40,11 +40,11 @@ class ImageProcurement:
                 return raw_url
             else:
                 logger.warning(f"No Unsplash results for keyword: '{keyword}'")
-                safe_kw = keyword.split()[0].replace(',', '').replace('.', '') if keyword else "finance"
+                safe_kw = urllib.parse.quote(keyword if keyword else "finance")
                 rand_seed = random.randint(1, 999999)
-                return f"https://loremflickr.com/800/400/{safe_kw}?lock={rand_seed}"
+                return f"https://image.pollinations.ai/prompt/{safe_kw}?width=800&height=400&nologo=true&seed={rand_seed}"
         except Exception as e:
             logger.error(f"Unsplash API error for keyword '{keyword}': {e}")
-            safe_kw = keyword.split()[0].replace(',', '').replace('.', '') if keyword else "finance"
+            safe_kw = urllib.parse.quote(keyword if keyword else "finance")
             rand_seed = random.randint(1, 999999)
-            return f"https://loremflickr.com/800/400/{safe_kw}?lock={rand_seed}"
+            return f"https://image.pollinations.ai/prompt/{safe_kw}?width=800&height=400&nologo=true&seed={rand_seed}"
