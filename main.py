@@ -70,7 +70,7 @@ def main():
 
         # D. Schedule Publish & 블로그스팟 자체 라벨(Label) 연동
         publish_time = base_time + timedelta(minutes=i * schedule_interval_mins)
-        publish_date_str = publish_time.isoformat()
+        publish_date_str = publish_time.isoformat(timespec='seconds').replace('+00:00', 'Z')
         
         labels = hashtags[:10]  # 최대 10개까지만 블로그 공식 카테고리 태그로 등록
 
