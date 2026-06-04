@@ -16,10 +16,9 @@ class ImageProcurement:
 
     def get_image_url(self, keyword: str) -> str:
         if not self.access_key or self.access_key.strip().lower() in ["your_unsplash_api_key_here", "none", "null", ""]:
-            # Fallback to Pollinations AI, which is free and very reliable
-            safe_kw = urllib.parse.quote(keyword if keyword else "finance")
+            # Fallback to Picsum for guaranteed fast and reliable images
             rand_seed = random.randint(1, 999999)
-            return f"https://image.pollinations.ai/prompt/{safe_kw}?width=800&height=400&nologo=true&seed={rand_seed}"
+            return f"https://picsum.photos/seed/{rand_seed}/800/400"
             
         params = {
             "query": keyword,
@@ -40,11 +39,9 @@ class ImageProcurement:
                 return raw_url
             else:
                 logger.warning(f"No Unsplash results for keyword: '{keyword}'")
-                safe_kw = urllib.parse.quote(keyword if keyword else "finance")
                 rand_seed = random.randint(1, 999999)
-                return f"https://image.pollinations.ai/prompt/{safe_kw}?width=800&height=400&nologo=true&seed={rand_seed}"
+                return f"https://picsum.photos/seed/{rand_seed}/800/400"
         except Exception as e:
             logger.error(f"Unsplash API error for keyword '{keyword}': {e}")
-            safe_kw = urllib.parse.quote(keyword if keyword else "finance")
             rand_seed = random.randint(1, 999999)
-            return f"https://image.pollinations.ai/prompt/{safe_kw}?width=800&height=400&nologo=true&seed={rand_seed}"
+            return f"https://picsum.photos/seed/{rand_seed}/800/400"

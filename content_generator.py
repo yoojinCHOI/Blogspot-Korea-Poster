@@ -1,5 +1,6 @@
 import json
 import logging
+import datetime
 from google import genai
 from config import Config
 
@@ -14,6 +15,7 @@ class ContentGenerator:
         self.model_name = 'gemini-2.5-flash-lite'
 
     def generate_article(self, topic: str) -> dict:
+        now_str = datetime.datetime.now().strftime("%Y년 %m월")
         prompt = f"""
 당신은 완벽한 상위 노출 방식을 아는 최우수 경제/주식/보험 전문 블로그 카피라이터입니다.
 아래의 주제로 한국인 직장인이 읽기 편하고 검색엔진(SEO)이 가장 선호하는 1500자(한국어) 이상의 깊이 있는 블로그 본문을 작성해주세요.
@@ -22,6 +24,7 @@ class ContentGenerator:
 "{topic}"
 
 [필수 준수 사항]
+0. 최신 트렌드 반영: 본문 내용의 작성 기준 시점은 **{now_str} 현재**입니다. 절대로 과거 연도(예: 2023년, 2024년)의 통계나 낡은 정보가 포함되어서는 안 되며, {now_str} 기준의 가장 최신 팩트와 트렌드, 정책 변화만을 서술하세요.
 1. 타겟 독자 및 문체: 20~50대 한국인 직장인 대상. 신뢰감 있고 친절한 존댓말(~습니다, ~해요) 사용.
 2. 할루시네이션(거짓 정보) 엄격 금지: 경제 지표, 종목 추천, 확정 수익 명시 등 사실과 다르거나 법적 문제가 될 수 있는 추측성 발언은 절대 삼가고, "객관적인 개념과 정보 전달" 위주로 서술하세요. 특정 종목을 매수하라고 강요하지 마세요.
 3. SEO 최적화: 

@@ -1,5 +1,6 @@
 import json
 import logging
+import datetime
 from google import genai
 from config import Config
 
@@ -15,9 +16,12 @@ class TopicPlanner:
         self.model_name = 'gemini-2.5-flash-lite'
 
     def generate_topics(self, count=5) -> list:
+        now_str = datetime.datetime.now().strftime("%Y년 %m월")
         prompt = f"""
 당신은 한국인들을 주 타겟으로 하는 웹사이트의 경제, 주식, 보험 전문 수석 콘텐츠 기획자입니다.
 오늘 방문자들의 클릭을 유도할 수 있는 매우 흥미롭고 유익한 블로그 포스팅 주제 (제목) {count}개를 선정해주세요.
+
+*중요*: 오늘은 {now_str}입니다. 반드시 {now_str} 현재 시점에 가장 화제가 되고 있는 최신 경제 뉴스, 트렌드, 정책 변화 등을 바탕으로 주제를 기획하세요. 과거의 뻔한 정보나 시의성이 떨어지는 일반적인 주제는 절대 피하세요.
 
 주제는 반드시 다음 3가지 핵심 테마에 고루 분포되어야 합니다:
 1. 거시/생활 경제 (예: 금리 인하 여파, 환율 전망, 청년/직장인 경제 꿀팁 등)
