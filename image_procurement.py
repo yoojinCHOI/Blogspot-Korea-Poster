@@ -16,9 +16,10 @@ class ImageProcurement:
 
     def get_image_url(self, keyword: str) -> str:
         if not self.access_key or self.access_key.strip().lower() in ["your_unsplash_api_key_here", "none", "null", ""]:
-            # Fallback to Picsum for guaranteed fast and reliable images
+            # Fallback to LoremFlickr with business/finance keywords for relevance
+            safe_kw = urllib.parse.quote(keyword.split()[0] if keyword else "office")
             rand_seed = random.randint(1, 999999)
-            return f"https://picsum.photos/seed/{rand_seed}/800/400"
+            return f"https://loremflickr.com/800/400/business,finance,{safe_kw}/all?lock={rand_seed}"
             
         params = {
             "query": keyword,
@@ -39,9 +40,11 @@ class ImageProcurement:
                 return raw_url
             else:
                 logger.warning(f"No Unsplash results for keyword: '{keyword}'")
+                safe_kw = urllib.parse.quote(keyword.split()[0] if keyword else "office")
                 rand_seed = random.randint(1, 999999)
-                return f"https://picsum.photos/seed/{rand_seed}/800/400"
+                return f"https://loremflickr.com/800/400/business,finance,{safe_kw}/all?lock={rand_seed}"
         except Exception as e:
             logger.error(f"Unsplash API error for keyword '{keyword}': {e}")
+            safe_kw = urllib.parse.quote(keyword.split()[0] if keyword else "office")
             rand_seed = random.randint(1, 999999)
-            return f"https://picsum.photos/seed/{rand_seed}/800/400"
+            return f"https://loremflickr.com/800/400/business,finance,{safe_kw}/all?lock={rand_seed}"
